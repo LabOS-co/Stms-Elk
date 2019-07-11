@@ -86,8 +86,11 @@ Refer to [Connect Kibana with Elasticsearch][connect-kibana] for detailed instru
 configuration.
 
 #### On the command line
-index templae: used to set fields type (string, number ...)
+
+index templae is used to set fields type (string, number ...)
+
 Create an index templae via the Kibana API:
+
 curl -XPUT "http://localhost:9200/_template/softov_log" -H 'Content-Type: application/json' -d @index_template.cfg
 
 Create an index pattern via the Kibana API:
