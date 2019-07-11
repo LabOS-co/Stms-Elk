@@ -38,8 +38,10 @@ Based on the official Docker images from Elastic:
 
 ### Host setup
 
-* [Docker](https://www.docker.com/community-edition#/download) version **17.05+**
-* [Docker Compose](https://docs.docker.com/compose/install/) version **1.6.0+**
+* [Docker](https://www.docker.com/community-edition#/download) version **18.09+**
+    https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-convenience-script
+* [Docker Compose](https://docs.docker.com/compose/install/) version **1.24.0+**
+    https://docs.docker.com/compose/install/
 * 1 GB of RAM
 
 By default, the stack exposes the following ports:
