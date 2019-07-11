@@ -24,8 +24,6 @@ Based on the official Docker images from Elastic:
    * [How to configure Elasticsearch](#how-to-configure-elasticsearch)
    * [How to configure Kibana](#how-to-configure-kibana)
    * [How to configure Logstash](#how-to-configure-logstash)
-   * [How to disable paid features](#how-to-disable-paid-features)
-   * [How to scale out the Elasticsearch cluster](#how-to-scale-out-the-elasticsearch-cluster)
 4. [Storage](#storage)
    * [How to persist Elasticsearch data](#how-to-persist-elasticsearch-data)
 
