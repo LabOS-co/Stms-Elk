@@ -4,7 +4,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
     container_name: elasticsearch1
     healthcheck:
-        test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+        test: ["CMD-SHELL", "curl --silent --fail localhost:9201/_cluster/health || exit 1"]
         interval: 30s
         timeout: 30s
         retries: 4
@@ -20,6 +20,9 @@ services:
       - network.host=_eth0_
       - http.port=9201
     ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
       nproc: 65535
       memlock:
         soft: -1
@@ -41,8 +44,8 @@ services:
       - type: volume
         source: logs
         target: /var/log
-      - type: volume
-        source: esdata1
+      - type: bind 
+        source:  /mnt/sdb/elastic-data/node1 
         target: /usr/share/elasticsearch/data
     networks:
       - elastic
@@ -53,7 +56,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
     container_name: elasticsearch2
     healthcheck:
-        test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+        test: ["CMD-SHELL", "curl --silent --fail localhost:9202/_cluster/health || exit 1"]
         interval: 30s
         timeout: 30s
         retries: 4
@@ -71,6 +74,9 @@ services:
       - http.port=9202
     ulimits:
       nproc: 65535
+      nofile:
+        soft: 65536
+        hard: 65536
       memlock:
         soft: -1
         hard: -1
@@ -91,8 +97,8 @@ services:
       - type: volume
         source: logs
         target: /var/log
-      - type: volume
-        source: esdata2
+      - type: bind
+        source:  /mnt/sdb/elastic-data/node2
         target: /usr/share/elasticsearch/data
     depends_on:
       - elasticsearch
@@ -104,7 +110,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
     container_name: elasticsearch3
     healthcheck:
-        test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+        test: ["CMD-SHELL", "curl --silent --fail localhost:9203/_cluster/health || exit 1"]
         interval: 30s
         timeout: 30s
         retries: 4
@@ -122,6 +128,9 @@ services:
       - http.port=9203
     ulimits:
       nproc: 65535
+      nofile:
+        soft: 65536
+        hard: 65536
       memlock:
         soft: -1
         hard: -1
@@ -142,8 +151,8 @@ services:
       - type: volume
         source: logs
         target: /var/log
-      - type: volume
-        source: esdata3
+      - type: bind
+        source:  /mnt/sdb/elastic-data/node3
         target: /usr/share/elasticsearch/data
     depends_on:
       - elasticsearch
@@ -324,9 +333,6 @@ services:
     networks:
       - elastic
 volumes:
-  esdata1:
-  esdata2:
-  esdata3:
   logs:
 
 networks:
