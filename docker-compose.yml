@@ -44,8 +44,8 @@ services:
       - type: volume
         source: logs
         target: /var/log
-      - type: bind 
-        source:  /mnt/sdb/elastic-data/node1 
+      - type: volume
+        source: esdata1
         target: /usr/share/elasticsearch/data
     networks:
       - elastic
@@ -66,7 +66,7 @@ services:
       - cluster.name=docker-cluster
       - cluster.initial_master_nodes=elasticsearch1
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms1G -Xmx1G"
+      - "ES_JAVA_OPTS=-Xms2G -Xmx2G"
       - "discovery.zen.ping.unicast.hosts=elasticsearch1"
       - http.cors.enabled=true
       - http.cors.allow-origin=*
@@ -97,8 +97,8 @@ services:
       - type: volume
         source: logs
         target: /var/log
-      - type: bind
-        source:  /mnt/sdb/elastic-data/node2
+      - type: volume
+        source: esdata2
         target: /usr/share/elasticsearch/data
     depends_on:
       - elasticsearch
@@ -120,7 +120,7 @@ services:
       - cluster.name=docker-cluster
       - cluster.initial_master_nodes=elasticsearch1
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms1G -Xmx1G"
+      - "ES_JAVA_OPTS=-Xms2G -Xmx2G"
       - "discovery.zen.ping.unicast.hosts=elasticsearch1"
       - http.cors.enabled=true
       - http.cors.allow-origin=*
@@ -151,8 +151,8 @@ services:
       - type: volume
         source: logs
         target: /var/log
-      - type: bind
-        source:  /mnt/sdb/elastic-data/node3
+      - type: volume
+        source: esdata3
         target: /usr/share/elasticsearch/data
     depends_on:
       - elasticsearch
@@ -184,7 +184,7 @@ services:
         window: 10s
     restart: always
     environment:
-      - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
+      - "LS_JAVA_OPTS=-Xmx2G -Xms2G"
       - "PIPELINE_WORKERS=4"
       - xpack.monitoring.elasticsearch.hosts=http://nginx:9200
     volumes:
@@ -275,7 +275,9 @@ services:
     restart: always
     environment:
       SERVER_NAME: localhost
-      ELASTICSEARCH_HOSTS: http://nginx:9200/
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9201
+      ELASTICSEARCH_HOSTS: http://elasticsearch2:9202
+      ELASTICSEARCH_HOSTS: http://elasticsearch3:9203
     ports:
       - 5601:5601
     volumes:
@@ -333,8 +335,10 @@ services:
     networks:
       - elastic
 volumes:
+  esdata1:
+  esdata2:
+  esdata3:
   logs:
-
 networks:
   elastic:
 
