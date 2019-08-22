@@ -1,8 +1,16 @@
 curl -X PUT "http://localhost:9200/_template/softov_log" -H 'Content-Type: application/json' -d @index_template.cfg
-curl -X POST -D- 'http://localhost:5601/api/saved_objects/index-pattern' \
-    -H 'Content-Type: application/json' \
-    -H 'kbn-version: 7.2.0' \
-    -d '{"attributes":{"title":"logstash*","timeFieldName":"@timestamp"}}'
+
+# we dont want to create the index pattern over and over again, so I am cheching if it exists first
+
+code=$(curl -X GET "localhost:5601/api/saved_objects/_find?type=index-pattern&search_fields=title&search=logstash*" -H 'kbn-xsrf: true')
+if [[ $code =~ '"total":0' ]] ; then
+
+	curl -X POST -D- 'http://localhost:5601/api/saved_objects/index-pattern' \
+		-H 'Content-Type: application/json' \
+		-H 'kbn-version: 7.2.0' \
+		-d '{"attributes":{"title":"logstash*","timeFieldName":"@timestamp"}}'
+
+fi
 	
 curl -X PUT 'localhost:9200/_ilm/policy/logstash_clean_policy?pretty' -H 'Content-Type: application/json' -d '
 { 
