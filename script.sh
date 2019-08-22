@@ -1,6 +1,6 @@
-curl -XPUT '/_ilm/policy/logstash_clean_policy1?pretty'  
--H 'Content-Type: application/json' 
--d '{
+curl -XPUT '/_ilm/policy/logstash_clean_policy1?pretty'  \
+-H 'Content-Type: application/json' \
+-d '{ 
   "policy": {
     "phases": {
       "hot": {
@@ -22,14 +22,15 @@ curl -XPUT '/_ilm/policy/logstash_clean_policy1?pretty'
 }'
 
 
-PUT /_template/logstash_clean_policy?pretty
-{
+curl -XPUT /_template/logstash_clean_policy1?pretty \
+-H 'Content-Type: application/json' \
+-d '{
   "index_patterns": [
     "logstash-*"
   ],
   "settings": {
     "number_of_shards": 1,
     "number_of_replicas": 1,
-    "index.lifecycle.name": "logstash_clean_policy"
+    "index.lifecycle.name": "logstash_clean_policy1"
   }
-}
+}'
