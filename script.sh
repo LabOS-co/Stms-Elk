@@ -1,6 +1,5 @@
-curl -XPUT 'http://localhost:5601/_ilm/policy/logstash_clean_policy1?pretty'  \
--H 'Content-Type: application/json' \
--d '{ 
+curl -X PUT 'localhost:9200/_ilm/policy/logstash_clean_policy1?pretty' -H 'Content-Type: application/json' -d '
+{ 
   "policy": {
     "phases": {
       "hot": {
@@ -22,9 +21,8 @@ curl -XPUT 'http://localhost:5601/_ilm/policy/logstash_clean_policy1?pretty'  \
 }'
 
 
-curl -XPUT 'http://localhost:5601/_template/logstash_clean_policy1?pretty' \
--H 'Content-Type: application/json' \
--d '{
+curl -X PUT 'localhost:9200/_template/logstash_clean_policy1?pretty' -H 'Content-Type: application/json' -d '
+{
   "index_patterns": [
     "logstash-*"
   ],
