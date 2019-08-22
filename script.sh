@@ -1,5 +1,5 @@
 curl -X PUT "http://localhost:9200/_template/softov_log" -H 'Content-Type: application/json' -d @index_template.cfg
-curl -X PUT -D- 'http://localhost:5601/api/saved_objects/index-pattern' \
+curl -X POST -D- 'http://localhost:5601/api/saved_objects/index-pattern' \
     -H 'Content-Type: application/json' \
     -H 'kbn-version: 7.2.0' \
     -d '{"attributes":{"title":"logstash*","timeFieldName":"@timestamp"}}'
