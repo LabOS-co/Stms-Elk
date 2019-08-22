@@ -1,4 +1,10 @@
-curl -X PUT 'localhost:9200/_ilm/policy/logstash_clean_policy1?pretty' -H 'Content-Type: application/json' -d '
+curl -X PUT "http://localhost:9200/_template/softov_log" -H 'Content-Type: application/json' -d @index_template.cfg
+curl -X POST -D- 'http://localhost:5601/api/saved_objects/index-pattern' \
+    -H 'Content-Type: application/json' \
+    -H 'kbn-version: 7.2.0' \
+    -d '{"attributes":{"title":"logstash*","timeFieldName":"@timestamp"}}'
+	
+curl -X PUT 'localhost:9200/_ilm/policy/logstash_clean_policy?pretty' -H 'Content-Type: application/json' -d '
 { 
   "policy": {
     "phases": {
@@ -20,7 +26,6 @@ curl -X PUT 'localhost:9200/_ilm/policy/logstash_clean_policy1?pretty' -H 'Conte
   }
 }'
 
-
 curl -X PUT 'localhost:9200/_template/logstash_clean_policy1?pretty' -H 'Content-Type: application/json' -d '
 {
   "index_patterns": [
@@ -29,6 +34,6 @@ curl -X PUT 'localhost:9200/_template/logstash_clean_policy1?pretty' -H 'Content
   "settings": {
     "number_of_shards": 1,
     "number_of_replicas": 1,
-    "index.lifecycle.name": "logstash_clean_policy1"
+    "index.lifecycle.name": "logstash_clean_policy"
   }
 }'
