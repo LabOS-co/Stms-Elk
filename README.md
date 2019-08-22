@@ -85,19 +85,14 @@ configuration.
 
 #### On the command line
 
-index templae is used to set fields type (string, number ...)
-
-Create an index templae via the Kibana API:
-
-curl -XPUT "http://localhost:9200/_template/softov_log" -H 'Content-Type: application/json' -d @index_template.cfg
-
-Create an index pattern via the Kibana API:
+The following script will create:
+* Index Template
+* Index Pattern
+* Index lifecycle policy
 
 ```console
-$ curl -XPOST -D- 'http://localhost:5601/api/saved_objects/index-pattern' \
-    -H 'Content-Type: application/json' \
-    -H 'kbn-version: 7.2.0' \
-    -d '{"attributes":{"title":"logstash*","timeFieldName":"@timestamp"}}'
+$  sudo chmod +x script.sh
+$  ./script.sh
 ```
 
 The created pattern will automatically be marked as the default index pattern as soon as the Kibana UI is opened for the first time.
