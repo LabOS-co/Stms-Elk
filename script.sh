@@ -1,3 +1,5 @@
+apk add curl
+
 curl -X PUT "http://localhost:9200/_template/softov_log" -H 'Content-Type: application/json' -d @index_template.cfg
 
 # we dont want to create the index pattern over and over again, so I am cheching if it exists first
