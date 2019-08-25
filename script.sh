@@ -1,6 +1,6 @@
 apk add curl
 
-curl -X PUT "http://elasticsearch1:9201/_template/softov_log" -H 'Content-Type: application/json' -d @index_template.cfg
+curl -X PUT "http://elasticsearch:9201/_template/softov_log" -H 'Content-Type: application/json' -d @index_template.cfg
 
 # we dont want to create the index pattern over and over again, so I am cheching if it exists first
 
@@ -14,7 +14,7 @@ if [[ $code =~ '"total":0' ]] ; then
 
 fi
 	
-curl -X PUT 'elasticsearch1:9201/_ilm/policy/logstash_clean_policy?pretty' -H 'Content-Type: application/json' -d '
+curl -X PUT 'elasticsearch:9201/_ilm/policy/logstash_clean_policy?pretty' -H 'Content-Type: application/json' -d '
 { 
   "policy": {
     "phases": {
@@ -36,7 +36,7 @@ curl -X PUT 'elasticsearch1:9201/_ilm/policy/logstash_clean_policy?pretty' -H 'C
   }
 }'
 
-curl -X PUT 'elasticsearch1:9201/_template/logstash_clean_policy1?pretty' -H 'Content-Type: application/json' -d '
+curl -X PUT 'elasticsearch:9201/_template/logstash_clean_policy1?pretty' -H 'Content-Type: application/json' -d '
 {
   "index_patterns": [
     "logstash-*"
