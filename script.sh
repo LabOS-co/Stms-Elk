@@ -53,12 +53,11 @@ curl -X PUT 'elasticsearch:9201/_template/logstash_clean_policy1?pretty' -H 'Con
 
 curl -X PUT "elasticsearch:9201/logstash*/_mapping?pretty" -H 'Content-Type: application/json' -d '
 {
-  "index_patterns": [
-    "logstash*"
-  ],
-  "settings": {
-    "number_of_shards": 1,
-    "number_of_replicas": 1,
-    "index.lifecycle.name": "logstash_clean_policy"
+  "properties": {
+        "message": { "type": "text"  },
+		    "duration": { "type": "long"  },
+		    "service_duration": { "type": "long"  },
+        "seq": { "type": "long"  }
   }
 }'
+
