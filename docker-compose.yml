@@ -334,11 +334,21 @@ services:
       - kibana
     networks:
       - elastic
-  test-script:
-    image: script.sh
+  run-script:
+    image: alpine:latest
+    command: /bin/bash script.sh
+    ulimits:
+      nproc: 65535
     depends_on:
+      - elasticsearch
+      - elasticsearch2
+      - elasticsearch3
+      - logstash
+      - kibana
       - nginx
-      
+    networks:
+      - elastic
+           
 volumes:
   esdata1:
   esdata2:
