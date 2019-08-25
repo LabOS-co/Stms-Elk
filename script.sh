@@ -1,7 +1,5 @@
 apk add curl
 
-curl -X PUT "http://elasticsearch:9201/_template/softov_log" -H 'Content-Type: application/json' -d @index_template.cfg
-
 # we dont want to create the index pattern over and over again, so I am cheching if it exists first
 
 code=$(curl -X GET "kibana:5601/api/saved_objects/_find?type=index-pattern&search_fields=title&search=logstash*" -H 'kbn-xsrf: true')
@@ -11,6 +9,8 @@ if [[ $code =~ '"total":0' ]] ; then
 		-H 'Content-Type: application/json' \
 		-H 'kbn-version: 7.2.0' \
 		-d '{"attributes":{"title":"logstash*","timeFieldName":"@timestamp"}}'
+		
+	curl -X PUT "http://elasticsearch:9201/_template/softov_log" -H 'Content-Type: application/json' -d @index_template.cfg
 
 fi
 	
