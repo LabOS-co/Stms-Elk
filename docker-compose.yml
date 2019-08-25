@@ -338,7 +338,7 @@ services:
     image: alpine:latest
     volumes:
      - ${PWD}/script.sh:/script.sh
-    command: ["sudo chmod +x ./script.sh", "./script.sh"]
+    command: /bin/bash script.sh
     ulimits:
       nproc: 65535
     depends_on:
