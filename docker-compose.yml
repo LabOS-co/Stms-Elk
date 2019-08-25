@@ -336,11 +336,6 @@ services:
       - elastic
   run-script:
     image: bash:latest
-    healthcheck:
-        test: ["CMD-SHELL", "curl --silent --fail elasticsearch:9201/_cluster/health || exit 1"]
-        interval: 30s
-        timeout: 30s
-        retries: 4
     restart: on-failure
     volumes:
      - ${PWD}/script.sh:/script.sh
@@ -349,11 +344,13 @@ services:
     ulimits:
       nproc: 65535
     depends_on:
-      - elasticsearch
+      - elasticsearch:
+            condition: service_healthy 
       - elasticsearch2
       - elasticsearch3
       - logstash
       - kibana
+            condition: service_healthy 
       - nginx
     networks:
       - elastic
