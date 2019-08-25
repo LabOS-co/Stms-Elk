@@ -84,7 +84,7 @@ Refer to [Connect Kibana with Elasticsearch][connect-kibana] for detailed instru
 configuration.
 
 
-#### The created pattern will automatically be marked as the default index pattern as soon as the Kibana UI is opened for the first time.
+#### :information_source: The created pattern will automatically be marked as the default index pattern as soon as the Kibana UI is opened for the first time.
 
 ## Configuration
 
