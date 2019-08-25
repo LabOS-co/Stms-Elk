@@ -334,6 +334,11 @@ services:
       - kibana
     networks:
       - elastic
+  test-script:
+    image: script.sh
+    depends_on:
+      - nginx
+      
 volumes:
   esdata1:
   esdata2:
