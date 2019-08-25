@@ -83,19 +83,8 @@ the Kibana web UI. Then all you have to do is hit the *Create* button.
 Refer to [Connect Kibana with Elasticsearch][connect-kibana] for detailed instructions about the index pattern
 configuration.
 
-#### On the command line
 
-The following script will create:
-* Index Template
-* Index Pattern
-* Index lifecycle policy
-
-```console
-$  sudo chmod +x script.sh
-$  ./script.sh
-```
-
-The created pattern will automatically be marked as the default index pattern as soon as the Kibana UI is opened for the first time.
+#### The created pattern will automatically be marked as the default index pattern as soon as the Kibana UI is opened for the first time.
 
 ## Configuration
 
