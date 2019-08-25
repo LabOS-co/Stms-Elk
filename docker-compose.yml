@@ -349,7 +349,7 @@ services:
       - elasticsearch2
       - elasticsearch3
       - logstash
-      - kibana
+      - kibana:
             condition: service_healthy 
       - nginx
     networks:
