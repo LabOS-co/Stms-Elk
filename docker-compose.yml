@@ -341,7 +341,7 @@ services:
      - ${PWD}/script.sh:/script.sh
      - ${PWD}/index_template.cfg:/index_template.cfg
      - ${PWD}/wait_for_es.sh:/wait_for_es.sh
-    command: [bash,"./wait_for_es.sh","--",bash,"./script.sh"]
+    command: [bash,"./wait_for_es.sh","http://elasticsearch:9201","--",bash,"./script.sh"]
     ulimits:
       nproc: 65535
     depends_on:

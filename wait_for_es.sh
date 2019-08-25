@@ -6,6 +6,8 @@ host="$1"
 shift
 cmd="$@"
 
+apk add curl
+
 
 until $(curl --output /dev/null --silent --head --fail "$host"); do
     printf '.'
