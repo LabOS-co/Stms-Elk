@@ -62,15 +62,3 @@ curl -X PUT "elasticsearch:9201/logstash*/_mapping?pretty" -H 'Content-Type: app
     "index.lifecycle.name": "logstash_clean_policy"
   }
 }'
-
-
-curl -X PUT "localhost:9200/twitter/_mapping?pretty" -H 'Content-Type: application/json' -d '
-{
-  "properties": {
-        "message": { "type": "text"  },
-		    "duration": { "type": "long"  },
-		    "service_duration": { "type": "long"  },
-        "seq": { "type": "long"  }
-  }
-}'
-
