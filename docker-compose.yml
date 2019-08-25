@@ -336,7 +336,7 @@ services:
       - elastic
   run-script:
     image: alpine:latest
-    command: ./script.sh
+    command: ["./script.sh"]
     ulimits:
       nproc: 65535
     depends_on:
