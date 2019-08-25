@@ -335,7 +335,7 @@ services:
     networks:
       - elastic
   run-script:
-    image: alpine:latest
+    image: bash:latest
     healthcheck:
         test: ["CMD-SHELL", "curl --silent --fail elasticsearch:9201/_cluster/health || exit 1"]
         interval: 30s
@@ -345,7 +345,7 @@ services:
     volumes:
      - ${PWD}/script.sh:/script.sh
      - ${PWD}/index_template.cfg:/index_template.cfg
-    command: [sh,"script.sh"]
+    command: [/bin/bash,"script.sh"]
     ulimits:
       nproc: 65535
     depends_on:
