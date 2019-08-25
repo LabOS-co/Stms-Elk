@@ -6,21 +6,14 @@ curl -X PUT "http://elasticsearch:9201/_template/softov_log" -H 'Content-Type: a
 
 code=$(curl -X GET "kibana:5601/api/saved_objects/_find?type=index-pattern&search_fields=title&search=logstash*" -H 'kbn-xsrf: true')
 # if [[ $code =~ '"total":0' ]] ; then
-case '"total":0' in *"$code"*)
+if [[ $code = *'"total":0'* ]]; then
+
 
 	curl -X POST -D- 'http://kibana:5601/api/saved_objects/index-pattern' \
 		-H 'Content-Type: application/json' \
 		-H 'kbn-version: 7.2.0' \
 		-d '{"attributes":{"title":"logstash*","timeFieldName":"@timestamp"}}'
-esac
-
-# fi
-	
-	
-case $1 in
-  *"$2"*) printf '"%s" is in "%s"\n' "$2" "$1"
-esac
-
+fi
 	
 curl -X PUT 'elasticsearch:9201/_ilm/policy/logstash_clean_policy?pretty' -H 'Content-Type: application/json' -d '
 { 
