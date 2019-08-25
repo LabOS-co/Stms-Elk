@@ -338,7 +338,7 @@ services:
     image: alpine:latest
     volumes:
      - ./:/srv
-    command: ["sudo chmod +x srv/script.sh", "srv/script.sh"]
+    command: ["sudo chmod +x /srv/script.sh", "/srv/script.sh"]
     ulimits:
       nproc: 65535
     depends_on:
