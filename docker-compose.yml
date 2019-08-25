@@ -345,7 +345,7 @@ services:
     volumes:
      - ${PWD}/script.sh:/script.sh
      - ${PWD}/index_template.cfg:/index_template.cfg
-    command: [/bin/bash,"script.sh"]
+    command: [sh,"script.sh"]
     ulimits:
       nproc: 65535
     depends_on:
