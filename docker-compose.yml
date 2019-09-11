@@ -184,7 +184,7 @@ services:
         window: 10s
     restart: always
     environment:
-      - "LS_JAVA_OPTS=-Xmx1G -Xms256M"
+      - "LS_JAVA_OPTS=-Xmx2G -Xms2G"
       - "PIPELINE_WORKERS=4"
       - xpack.monitoring.elasticsearch.hosts=http://nginx:9200
     volumes:
@@ -220,7 +220,7 @@ services:
         window: 10s
     restart: always
     environment:
-      - "LS_JAVA_OPTS=-Xmx1G -Xms256M"
+      - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
       - "PIPELINE_WORKERS=4"
       - xpack.monitoring.elasticsearch.hosts=http://nginx:9200
     volumes:
@@ -256,7 +256,7 @@ services:
         window: 10s
     restart: always
     environment:
-      - "LS_JAVA_OPTS=-Xmx1G -Xms256M"
+      - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
       - "PIPELINE_WORKERS=4"
       - xpack.monitoring.elasticsearch.hosts=http://nginx:9200
     volumes:
