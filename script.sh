@@ -15,8 +15,13 @@ if [[ $code =~ '"total":0' ]] ; then
 	curl -X PUT "elasticsearch:9201/_template/softov_log" -H 'Content-Type: application/json' -d @index_template.cfg
 
 fi
+
+# Send fake msg to create an index
+
+logger -n 127.0.0.1 -P 514 "Moran's test MSG"
 	
-	
+# Create the Clean Policy
+
 curl -X PUT 'elasticsearch:9201/_ilm/policy/logstash_clean_policy?pretty' -H 'Content-Type: application/json' -d '
 { 
   "policy": {
@@ -39,6 +44,8 @@ curl -X PUT 'elasticsearch:9201/_ilm/policy/logstash_clean_policy?pretty' -H 'Co
   }
 }'
 
+# Assign the Clean Policy to the index
+
 curl -X PUT 'elasticsearch:9201/_template/logstash_clean_policy1?pretty' -H 'Content-Type: application/json' -d '
 {
   "index_patterns": [
@@ -50,6 +57,8 @@ curl -X PUT 'elasticsearch:9201/_template/logstash_clean_policy1?pretty' -H 'Con
     "index.lifecycle.name": "logstash_clean_policy"
   }
 }'
+
+# Update Fields properties for existing indexes
 
 curl -X PUT "elasticsearch:9201/logstash*/_mapping?pretty" -H 'Content-Type: application/json' -d '
 {
