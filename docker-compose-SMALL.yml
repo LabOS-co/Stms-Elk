@@ -82,8 +82,6 @@ services:
       - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     depends_on:
       - elasticsearch
-      - elasticsearch2
-      - elasticsearch3
     networks:
       - elastic
     #ports:
