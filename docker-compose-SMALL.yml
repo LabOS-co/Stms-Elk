@@ -127,7 +127,7 @@ services:
     image: bash:latest
     restart: on-failure
     volumes:
-     - ${PWD}/script.sh:/script.sh
+     - ${PWD}/script-small.sh:/script.sh
      - ${PWD}/index_template.cfg:/index_template.cfg
      - ${PWD}/wait_for_es.sh:/wait_for_es.sh
     command: [bash,"./wait_for_es.sh","http://elasticsearch:9200","--",bash,"./script.sh"]
