@@ -18,7 +18,7 @@ fi
 
 # Send fake msg to create an index
 
-logger -n 127.0.0.1 -P 514 "Moran's test MSG"
+echo "<133>${0##*/}[$$]: Test syslog message from bash"   > /dev/udp/127.0.0.1/5014
 	
 # Create the Clean Policy
 
