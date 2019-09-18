@@ -52,115 +52,6 @@ services:
     ports:
       - 9201:9201
       - 9300:9300
-  elasticsearch2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
-    container_name: elasticsearch2
-    healthcheck:
-        test: ["CMD-SHELL", "curl --silent --fail localhost:9202/_cluster/health || exit 1"]
-        interval: 30s
-        timeout: 30s
-        retries: 4
-    restart: always
-    environment:
-      - node.name=elasticsearch2
-      - cluster.name=docker-cluster
-      - cluster.initial_master_nodes=elasticsearch1
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xmx256m -Xms256m"
-      - "discovery.zen.ping.unicast.hosts=elasticsearch1"
-      - http.cors.enabled=true
-      - http.cors.allow-origin=*
-      - network.host=_eth0_
-      - http.port=9202
-    ulimits:
-      nproc: 65535
-      nofile:
-        soft: 65536
-        hard: 65536
-      memlock:
-        soft: -1
-        hard: -1
-    cap_add:
-      - ALL
-    # privileged: true
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 10s
-    volumes:
-      - type: volume
-        source: logs
-        target: /var/log
-      - type: volume
-        source: esdata2
-        target: /usr/share/elasticsearch/data
-    depends_on:
-      - elasticsearch
-    networks:
-      - elastic
-    ports:
-      - 9202:9202
-  elasticsearch3:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
-    container_name: elasticsearch3
-    healthcheck:
-        test: ["CMD-SHELL", "curl --silent --fail localhost:9203/_cluster/health || exit 1"]
-        interval: 30s
-        timeout: 30s
-        retries: 4
-    restart: always
-    environment:
-      - node.name=elasticsearch3
-      - cluster.name=docker-cluster
-      - cluster.initial_master_nodes=elasticsearch1
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xmx256m -Xms256m"
-      - "discovery.zen.ping.unicast.hosts=elasticsearch1"
-      - http.cors.enabled=true
-      - http.cors.allow-origin=*
-      - network.host=_eth0_
-      - http.port=9203
-    ulimits:
-      nproc: 65535
-      nofile:
-        soft: 65536
-        hard: 65536
-      memlock:
-        soft: -1
-        hard: -1
-    cap_add:
-      - ALL
-    # privileged: true
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 10s
-    volumes:
-      - type: volume
-        source: logs
-        target: /var/log
-      - type: volume
-        source: esdata3
-        target: /usr/share/elasticsearch/data
-    depends_on:
-      - elasticsearch
-      - elasticsearch2
-    networks:
-      - elastic
-    ports:
-      - 9203:9203
   logstash:
     image: docker.elastic.co/logstash/logstash:7.2.0
     container_name: logstash
@@ -197,78 +88,6 @@ services:
       - elastic
     #ports:
      # - 5014:5014/udp
-  logstash2:
-    image: docker.elastic.co/logstash/logstash:7.2.0
-    container_name: logstash2
-    ulimits:
-      nproc: 65535
-      memlock:
-        soft: -1
-        hard: -1
-    cap_add:
-      - ALL
-    # privileged: true
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 10s
-    restart: always
-    environment:
-      - "LS_JAVA_OPTS=-Xmx256m -Xms256m"
-      - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts=http://nginx:9200
-    volumes:
-      - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-    depends_on:
-      - elasticsearch
-      - elasticsearch2
-      - elasticsearch3
-    networks:
-      - elastic
-    #ports:
-      #- 5015:5014/udp
-  logstash3:
-    image: docker.elastic.co/logstash/logstash:7.2.0
-    container_name: logstash3
-    ulimits:
-      nproc: 65535
-      memlock:
-        soft: -1
-        hard: -1
-    cap_add:
-      - ALL
-    # privileged: true
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 10s
-    restart: always
-    environment:
-      - "LS_JAVA_OPTS=-Xmx256m -Xms256m"
-      - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts=http://nginx:9200
-    volumes:
-      - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-    depends_on:
-      - elasticsearch
-      - elasticsearch2
-      - elasticsearch3
-    networks:
-      - elastic
-    #ports:
-      #- 5016:5014/udp
   kibana:
     image: docker.elastic.co/kibana/kibana:7.2.0
     container_name: kibana
@@ -276,8 +95,6 @@ services:
     environment:
       SERVER_NAME: localhost
       ELASTICSEARCH_HOSTS: http://elasticsearch:9201
-      ELASTICSEARCH_HOSTS: http://elasticsearch2:9202
-      ELASTICSEARCH_HOSTS: http://elasticsearch3:9203
     ports:
       - 5601:5601
     volumes:
@@ -310,8 +127,6 @@ services:
         window: 120s
     depends_on:
       - elasticsearch
-      - elasticsearch2
-      - elasticsearch3
       - logstash
     networks:
       - elastic
@@ -328,8 +143,6 @@ services:
       nproc: 65535
     depends_on:
       - elasticsearch
-      - elasticsearch2
-      - elasticsearch3
       - logstash
       - kibana
     networks:
@@ -346,8 +159,6 @@ services:
       nproc: 65535
     depends_on:
       - elasticsearch
-      - elasticsearch2
-      - elasticsearch3
       - logstash
       - kibana
       - nginx
@@ -356,8 +167,6 @@ services:
            
 volumes:
   esdata1:
-  esdata2:
-  esdata3:
   logs:
 networks:
   elastic:
