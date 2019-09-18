@@ -15,7 +15,7 @@ services:
       - http.cors.enabled=true
       - http.cors.allow-origin=*
       - http.port=9200
-      - discovery.type = single-node
+      - discovery.type=single-node
     ulimits:
       nofile:
         soft: 65536
