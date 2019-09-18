@@ -14,7 +14,6 @@ services:
       - "ES_JAVA_OPTS=-Xmx256m -Xms256m"
       - http.cors.enabled=true
       - http.cors.allow-origin=*
-      - network.host=_eth0_
       - http.port=9200
     ulimits:
       nofile:
