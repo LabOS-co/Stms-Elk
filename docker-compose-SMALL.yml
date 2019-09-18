@@ -14,7 +14,6 @@ services:
       - "ES_JAVA_OPTS=-Xmx256m -Xms256m"
       - http.cors.enabled=true
       - http.cors.allow-origin=*
-      - http.port=9200
       - discovery.type=single-node
     ulimits:
       nofile:
