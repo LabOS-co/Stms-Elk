@@ -23,8 +23,7 @@ cmd="elasticsearch:9201/logstash-"$d'/_doc/'
 time=$(date +"%Y-%m-%dT%H:%M:%S")
 curl -X POST $cmd -H 'Content-Type: application/json' -d '
 { 
-    "syslog_message" : "moran",
-	"@timestamp": '"$time"'
+    "syslog_message" : "moran"
 }'
 
 
