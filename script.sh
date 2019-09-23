@@ -18,7 +18,16 @@ fi
 
 # Send fake msg to create an index
 
-logger -n 127.0.0.1 -P 514 "Moran's test MSG"
+d = 'date +%Y.%m.%d'
+curl -X POST 'elasticsearch:9201/logstash-' + $d +'/_doc/' -H 'Content-Type: application/json' -d '
+{ 
+    "syslog_message" : "moran"
+}'
+
+POST logstash-moran/_doc/
+{
+
+}
 	
 # Create the Clean Policy
 
