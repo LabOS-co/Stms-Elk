@@ -18,8 +18,8 @@ fi
 
 # Send fake msg to create an index
 
-d = 'date +%Y.%m.%d'
-cmd = ('elasticsearch:9201/logstash-' + $d +'/_doc/')
+d=$(date +%Y.%m.%d)
+cmd=$('elasticsearch:9201/logstash-' + $d +'/_doc/')
 curl -X POST $cmd -H 'Content-Type: application/json' -d '
 { 
     "syslog_message" : "moran"
