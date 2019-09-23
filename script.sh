@@ -16,14 +16,29 @@ if [[ $code =~ '"total":0' ]] ; then
 
 fi
 
-# Send fake msg to create an index
+# create the index
 
 d=$(date +%Y.%m.%d)
 cmd="elasticsearch:9201/logstash-"$d'/_doc/'
 time=$(date +"%Y-%m-%dT%H:%M:%S")
-curl -X POST $cmd -H 'Content-Type: application/json' -d '
-{ 
-    "syslog_message" : "moran"
+new_index="elasticsearch:9201/logstash-"$d
+#curl -X POST $cmd -H 'Content-Type: application/json' -d '
+#{ 
+    #"syslog_message" : "moran"
+#}'
+
+curl -XPUT $new_index -H 'Content-Type: application/json' 
+
+# Update Fields properties for existing indexes
+
+curl -X PUT "elasticsearch:9201/logstash*/_mapping?pretty" -H 'Content-Type: application/json' -d '
+{
+  "properties": {
+        "message": { "type": "text"  },
+		    "duration": { "type": "long"  },
+		    "service_duration": { "type": "long"  },
+        "seq": { "type": "long"  }
+  }
 }'
 
 
@@ -65,15 +80,5 @@ curl -X PUT 'elasticsearch:9201/_template/logstash_clean_policy1?pretty' -H 'Con
   }
 }'
 
-# Update Fields properties for existing indexes
 
-curl -X PUT "elasticsearch:9201/logstash*/_mapping?pretty" -H 'Content-Type: application/json' -d '
-{
-  "properties": {
-        "message": { "type": "text"  },
-		    "duration": { "type": "long"  },
-		    "service_duration": { "type": "long"  },
-        "seq": { "type": "long"  }
-  }
-}'
 
