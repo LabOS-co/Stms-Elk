@@ -19,16 +19,13 @@ fi
 # Send fake msg to create an index
 
 d = 'date +%Y.%m.%d'
-curl -X POST 'elasticsearch:9201/logstash-' + $d +'/_doc/' -H 'Content-Type: application/json' -d '
+cmd = ('elasticsearch:9201/logstash-' + $d +'/_doc/')
+curl -X POST $cmd -H 'Content-Type: application/json' -d '
 { 
     "syslog_message" : "moran"
 }'
 
-POST logstash-moran/_doc/
-{
 
-}
-	
 # Create the Clean Policy
 
 curl -X PUT 'elasticsearch:9201/_ilm/policy/logstash_clean_policy?pretty' -H 'Content-Type: application/json' -d '
