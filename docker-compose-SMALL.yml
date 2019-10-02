@@ -11,7 +11,7 @@ services:
     restart: always
     environment:
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xmx256m -Xms256m"
+      - "ES_JAVA_OPTS=-Xmx512m -Xms512m"
       - http.cors.enabled=true
       - http.cors.allow-origin=*
       - discovery.type=single-node
@@ -70,7 +70,7 @@ services:
         window: 10s
     restart: always
     environment:
-      - "LS_JAVA_OPTS=-Xmx256m -Xms256m"
+      - "LS_JAVA_OPTS=-Xmx512m -Xms512m"
       - "PIPELINE_WORKERS=4"
       - xpack.monitoring.elasticsearch.hosts=http://elasticsearch:9200
     volumes:
@@ -109,10 +109,10 @@ services:
       resources:
         limits:
           cpus: '1'
-          memory: 256M
+          memory: 512m
         reservations:
           cpus: '1'
-          memory: 256M
+          memory: 512m
       restart_policy:
         condition: on-failure
         delay: 30s
