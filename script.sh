@@ -7,6 +7,7 @@ if [[ $code =~ '"total":0' ]] ; then
 
 	curl -X POST -D- 'kibana:5601/api/saved_objects/index-pattern' \
 		-H 'Content-Type: application/json' \
+		-H 'kbn-version: 7.4.0' \
 		-d '{"attributes":{"title":"logstash*","timeFieldName":"@timestamp"}}'
 		
 	echo "Creating Index Template"
