@@ -109,10 +109,10 @@ services:
       resources:
         limits:
           cpus: '1'
-          memory: 256m
+          memory: 512m
         reservations:
           cpus: '1'
-          memory: 256m
+          memory: 512m
       restart_policy:
         condition: on-failure
         delay: 30s
