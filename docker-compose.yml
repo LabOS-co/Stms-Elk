@@ -313,6 +313,9 @@ services:
       - elasticsearch2
       - elasticsearch3
       - logstash
+    environment:
+      xpack.monitoring.enabled: "true"
+      xpack.reporting.enabled: "true"
     networks:
       - elastic
   nginx:
