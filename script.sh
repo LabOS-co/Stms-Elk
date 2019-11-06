@@ -1,11 +1,12 @@
 apk add curl
 apk add util-linux
 
-
-
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' kibana:5601/status -I)" != 200 ]]; 
-	echo 'Kibana is not ready... sleeping for 5';
-	do sleep 5; 
+res = $(curl -s -o /dev/null -w ''%{http_code}'' kibana:5601/status -I)
+until $res = "200" ; do
+    echo 'Kibana is not ready... sleeping for 5';
+	echo $res
+    sleep 5
+	res = $(curl -s -o /dev/null -w ''%{http_code}'' kibana:5601/status -I)
 done
 
 # we dont want to create the index pattern over and over again, so I am cheching if it exists first
