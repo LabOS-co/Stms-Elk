@@ -340,7 +340,7 @@ services:
     networks:
       - elastic
   run-script:
-    image: alpine:latest
+    image: bash:latest
     restart: on-failure
     volumes:
      - ${PWD}/script.sh:/script.sh
