@@ -39,6 +39,7 @@ echo wait 60 secs and send dummy msg to create index
 sleep 60
 logger -n logstash -P 5014 -d "<24>daemon::[1] 14064 FATAL test:1111 1000 2282113801|11067 NO_VAL "start test" 787 [0] no_error - sample"
 
+echo msg sent!
 
 # Update Fields properties for existing indexes
 

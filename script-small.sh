@@ -1,4 +1,23 @@
 apk add curl
+apk add util-linux
+
+
+fetchstatus() {
+  curl \
+    -o /dev/null \
+    --silent \
+    --head \
+    --write-out '%{http_code}' \
+    "kibana:5601/status"
+}
+
+urlstatus=$(fetchstatus)          # initialize to actual value before we sleep even once
+until [ "$urlstatus" = 200 ]; do  # until our result is success...
+  sleep 5                         # wait 5 seconds...
+  echo 'Kibana is not ready... sleeping for 5';
+  echo $urlstatus
+  urlstatus=$(fetchstatus)        # then poll again.
+done
 
 # we dont want to create the index pattern over and over again, so I am cheching if it exists first
 
@@ -16,14 +35,11 @@ if [[ $code =~ '"total":0' ]] ; then
 
 fi
 
-# create the index
+echo wait 60 secs and send dummy msg to create index 
+sleep 60
+logger -n logstash -P 5014 -d "<24>daemon::[1] 14064 FATAL test:1111 1000 2282113801|11067 NO_VAL "start test" 787 [0] no_error - sample"
 
-d=$(date +%Y.%m.%d)
-cmd="elasticsearch:9201/logstash-"$d'/_doc/'
-time=$(date +"%Y-%m-%dT%H:%M:%S")
-new_index="elasticsearch:9200/logstash-"$d
-	
-curl -XPUT $new_index -H 'Content-Type: application/json' 
+echo msg sent!
 
 # Update Fields properties for existing indexes
 
