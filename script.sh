@@ -2,7 +2,7 @@ apk add curl
 apk add util-linux
 
 
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:5601/status -I)" != "200" ]]; 
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' kibana:5601/status -I)" != "200" ]]; 
 	echo 'Kibana is not ready... sleeping for 5';
 	do sleep 5; 
 done
