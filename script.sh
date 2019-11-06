@@ -2,8 +2,6 @@ apk add curl
 apk add util-linux
 
 
-
-
 fetchstatus() {
   curl \
     -o /dev/null \
@@ -37,16 +35,8 @@ if [[ $code =~ '"total":0' ]] ; then
 
 fi
 
-# create the index
-
-d=$(date +%Y.%m.%d)
-cmd="elasticsearch:9201/logstash-"$d'/_doc/'
-time=$(date +"%Y-%m-%dT%H:%M:%S")
-new_index="elasticsearch:9201/logstash-"$d
-
-# curl -XPUT $new_index -H 'Content-Type: application/json' 
-
-#send dummy msg to create index 
+echo wait 60 secs and send dummy msg to create index 
+sleep 60
 logger -n logstash -P 5014 -d "<24>daemon::[1] 14064 FATAL test:1111 1000 2282113801|11067 NO_VAL "start test" 787 [0] no_error - sample"
 
 
