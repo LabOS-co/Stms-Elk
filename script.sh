@@ -1,12 +1,24 @@
 apk add curl
 apk add util-linux
 
-res = $(curl -s -o /dev/null -w ''%{http_code}'' kibana:5601/status -I)
-until $res = "200" ; do
-    echo 'Kibana is not ready... sleeping for 5';
-	echo $res
-    sleep 5
-	res = $(curl -s -o /dev/null -w ''%{http_code}'' kibana:5601/status -I)
+
+
+
+fetchstatus() {
+  curl \
+    -o /dev/null \
+    --silent \
+    --head \
+    --write-out '%{http_code}' \
+    "kibana:5601/status"
+}
+
+urlstatus=$(fetchstatus)          # initialize to actual value before we sleep even once
+until [ "$urlstatus" = 200 ]; do  # until our result is success...
+  sleep 5                         # wait 5 seconds...
+  echo 'Kibana is not ready... sleeping for 5';
+  echo $urlstatus
+  urlstatus=$(fetchstatus)        # then poll again.
 done
 
 # we dont want to create the index pattern over and over again, so I am cheching if it exists first
