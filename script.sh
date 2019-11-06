@@ -1,4 +1,4 @@
-apk add curl
+# apk add curl
 
 # we dont want to create the index pattern over and over again, so I am cheching if it exists first
 
