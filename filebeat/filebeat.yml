@@ -83,12 +83,12 @@ output.elasticsearch:
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
-monitoring.enabled: true
+#monitoring.enabled: true
 
 # Sets the UUID of the Elasticsearch cluster under which monitoring data for this
 # Filebeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
 # is enabled, the UUID is derived from the Elasticsearch cluster referenced by output.elasticsearch.
-monitoring.cluster_uuid:
+#monitoring.cluster_uuid:
 
 # Uncomment to send the metrics to Elasticsearch. Most settings from the
 # Elasticsearch output are accepted here as well.
@@ -97,4 +97,4 @@ monitoring.cluster_uuid:
 # output configuration, so if you have the Elasticsearch output configured such
 # that it is pointing to your Elasticsearch monitoring cluster, you can simply
 # uncomment the following line.
-monitoring.elasticsearch:
+#monitoring.elasticsearch:
