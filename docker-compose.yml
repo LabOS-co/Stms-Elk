@@ -197,7 +197,7 @@ services:
     environment:
       - "LS_JAVA_OPTS=-Xmx2G -Xms2G"
       - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts: http://nginx:9200
+      - "xpack.monitoring.elasticsearch.hosts= http://nginx:9200"
       - xpack.monitoring.enabled:true
     volumes:
       - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
