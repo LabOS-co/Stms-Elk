@@ -11,44 +11,6 @@
 # configuration file.
 
 
-#==========================  Modules configuration =============================
-filebeat.modules:
-
-#---------------------------- Elasticsearch Module ----------------------------
-- module: elasticsearch
-  # Server log
-  server:
-    enabled: true
-
-    # Set custom paths for the log files. If left empty,
-    # Filebeat will choose the paths depending on your OS.
-    #var.paths:
-
-  gc:
-    enabled: true
-    # Set custom paths for the log files. If left empty,
-    # Filebeat will choose the paths depending on your OS.
-    #var.paths:
-
-  audit:
-    enabled: true
-    # Set custom paths for the log files. If left empty,
-    # Filebeat will choose the paths depending on your OS.
-    #var.paths:
-
-  slowlog:
-    enabled: true
-    # Set custom paths for the log files. If left empty,
-    # Filebeat will choose the paths depending on your OS.
-    #var.paths:
-
-  deprecation:
-    enabled: true
-    # Set custom paths for the log files. If left empty,
-    # Filebeat will choose the paths depending on your OS.
-    #var.paths:
-
-
 #=========================== Filebeat inputs =============================
 
 filebeat.inputs:
@@ -70,8 +32,8 @@ setup.template.name: "filebeat-"
 setup.template.pattern: "filebeat-*"
 #setup.dashboards.enabled: true
 
-setup.kibana:
-  host: http://kibana:5601
+#setup.kibana:
+#  host: http://kibana:5601
 
 output.elasticsearch:
   hosts: ["nginx:9200"]
@@ -83,7 +45,7 @@ output.elasticsearch:
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
-#monitoring.enabled: true
+monitoring.enabled: true
 
 # Sets the UUID of the Elasticsearch cluster under which monitoring data for this
 # Filebeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
@@ -97,4 +59,4 @@ output.elasticsearch:
 # output configuration, so if you have the Elasticsearch output configured such
 # that it is pointing to your Elasticsearch monitoring cluster, you can simply
 # uncomment the following line.
-#monitoring.elasticsearch:
+monitoring.elasticsearch:
