@@ -73,7 +73,7 @@ services:
       - http.cors.allow-origin=*
       - network.host=_eth0_
       - http.port=9202
-      - path.repo = "/backups"
+      - path.repo="/backups"
     ulimits:
       nproc: 65535
       nofile:
@@ -128,7 +128,7 @@ services:
       - http.cors.allow-origin=*
       - network.host=_eth0_
       - http.port=9203
-      - path.repo = "/backups"
+      - path.repo="/backups"
     ulimits:
       nproc: 65535
       nofile:
