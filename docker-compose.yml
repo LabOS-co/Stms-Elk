@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
     container_name: elasticsearch1
     healthcheck:
         test: ["CMD-SHELL", "curl --silent --fail localhost:9201/_cluster/health || exit 1"]
@@ -19,6 +19,7 @@ services:
       - http.cors.allow-origin=*
       - network.host=_eth0_
       - http.port=9201
+      - path.repo = "/backups"
     ulimits:
       nofile:
         soft: 65536
@@ -53,7 +54,7 @@ services:
       - 9201:9201
       - 9300:9300
   elasticsearch2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
     container_name: elasticsearch2
     healthcheck:
         test: ["CMD-SHELL", "curl --silent --fail localhost:9202/_cluster/health || exit 1"]
@@ -72,6 +73,7 @@ services:
       - http.cors.allow-origin=*
       - network.host=_eth0_
       - http.port=9202
+      - path.repo = "/backups"
     ulimits:
       nproc: 65535
       nofile:
@@ -107,7 +109,7 @@ services:
     ports:
       - 9202:9202
   elasticsearch3:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
     container_name: elasticsearch3
     healthcheck:
         test: ["CMD-SHELL", "curl --silent --fail localhost:9203/_cluster/health || exit 1"]
@@ -126,6 +128,7 @@ services:
       - http.cors.allow-origin=*
       - network.host=_eth0_
       - http.port=9203
+      - path.repo = "/backups"
     ulimits:
       nproc: 65535
       nofile:
@@ -161,8 +164,16 @@ services:
       - elastic
     ports:
       - 9203:9203
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.5.0
+    command: filebeat -e -strict.perms=false
+    volumes:
+      - ${PWD}//filebeat/filebeat.yml:/etc/filebeat.yml
+      - logs:/var/log
+    networks:
+      - elastic
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.4.0
+    image: docker.elastic.co/logstash/logstash:7.5.0
     container_name: logstash
     ulimits:
       nproc: 65535
@@ -186,7 +197,8 @@ services:
     environment:
       - "LS_JAVA_OPTS=-Xmx2G -Xms2G"
       - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts=http://nginx:9200
+      - xpack.monitoring.elasticsearch.hosts:http://nginx:9200
+      - xpack.monitoring.enabled:true
     volumes:
       - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     depends_on:
@@ -198,7 +210,7 @@ services:
     #ports:
      # - 5014:5014/udp
   logstash2:
-    image: docker.elastic.co/logstash/logstash:7.4.0
+    image: docker.elastic.co/logstash/logstash:7.5.0
     container_name: logstash2
     ulimits:
       nproc: 65535
@@ -222,7 +234,8 @@ services:
     environment:
       - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
       - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts=http://nginx:9200
+      - xpack.monitoring.elasticsearch.hosts:http://nginx:9200
+      - xpack.monitoring.enabled:true
     volumes:
       - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     depends_on:
@@ -234,7 +247,7 @@ services:
     #ports:
       #- 5015:5014/udp
   logstash3:
-    image: docker.elastic.co/logstash/logstash:7.4.0
+    image: docker.elastic.co/logstash/logstash:7.5.0
     container_name: logstash3
     ulimits:
       nproc: 65535
@@ -258,7 +271,8 @@ services:
     environment:
       - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
       - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts=http://nginx:9200
+      - xpack.monitoring.elasticsearch.hosts:http://nginx:9200
+      - xpack.monitoring.enabled:true
     volumes:
       - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     depends_on:
@@ -270,7 +284,7 @@ services:
     #ports:
       #- 5016:5014/udp
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.4.0
+    image: docker.elastic.co/kibana/kibana:7.5.0
     container_name: kibana
     restart: always
     environment:
