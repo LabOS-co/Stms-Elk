@@ -166,7 +166,7 @@ services:
       - 9203:9203
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.5.0
-    command: filebeat -e -strict.perms=false
+    command: filebeat -e -strict.perms=false --modules nginx,elasticsearch
     volumes:
       - ${PWD}/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
       - logs:/var/log
@@ -197,7 +197,7 @@ services:
     environment:
       - "LS_JAVA_OPTS=-Xmx2G -Xms2G"
       - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts: ["http://nginx:9200"]
+      - xpack.monitoring.elasticsearch.hosts: "http://nginx:9200"
       - xpack.monitoring.enabled:true
     volumes:
       - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
@@ -234,7 +234,7 @@ services:
     environment:
       - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
       - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts: ["http://nginx:9200"]
+      - xpack.monitoring.elasticsearch.hosts: "http://nginx:9200"
       - xpack.monitoring.enabled:true
     volumes:
       - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
@@ -271,7 +271,7 @@ services:
     environment:
       - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
       - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts: ["http://nginx:9200"]
+      - xpack.monitoring.elasticsearch.hosts: "http://nginx:9200"
       - xpack.monitoring.enabled:true
     volumes:
       - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
