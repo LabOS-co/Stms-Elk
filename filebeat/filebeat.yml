@@ -1,5 +1,27 @@
-filebeat.prospectors:
+###################### Filebeat Configuration Example #########################
+
+# This file is an example configuration file highlighting only the most common
+# options. The filebeat.reference.yml file from the same directory contains all the
+# supported options with more comments. You can use it as a reference.
+#
+# You can find the full configuration reference here:
+# https://www.elastic.co/guide/en/beats/filebeat/index.html
+
+# For more available modules and options, please see the filebeat.reference.yml sample
+# configuration file.
+
+#=========================== Filebeat inputs =============================
+
+filebeat.inputs:
+
+# Each - is an input. Most options can be set at the input level, so
+# you can use different inputs for various configurations.
+# Below are the input specific configurations.
+
 - type: log
+
+  # Change to true to enable this input configuration.
+  enabled: true
   paths:
     - '/var/lib/docker/containers/*/*.log'
   json.message_key: log
@@ -7,11 +29,14 @@ filebeat.prospectors:
 
 setup.template.name: "filebeat-"
 setup.template.pattern: "filebeat-*"
-setup.dashboards.enabled: true
+#setup.dashboards.enabled: true
 
 setup.kibana:
   host: http://kibana:5601
 
 output.elasticsearch:
-  hosts: ["http://nginx:9200"]
+  hosts: ["nginx:9200"]
   index: "filebeat-%{[beat.version]}-%{+yyyy.MM.dd}"
+  
+monitoring.enabled: true
+monitoring.elasticsearch:
