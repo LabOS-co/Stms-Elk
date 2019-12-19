@@ -1,7 +1,9 @@
 filebeat.prospectors:
 - type: log
   paths:
-    - /usr/share/filebeat/logs/*.log
+    - '/var/lib/docker/containers/*/*.log'
+  json.message_key: log
+  json.keys_under_root: true
 
 setup.template.name: "filebeat-"
 setup.template.pattern: "filebeat-*"
