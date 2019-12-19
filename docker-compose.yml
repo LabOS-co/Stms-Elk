@@ -197,7 +197,7 @@ services:
     environment:
       - "LS_JAVA_OPTS=-Xmx2G -Xms2G"
       - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts:http://nginx:9200
+      - xpack.monitoring.elasticsearch.hosts: ["http://nginx:9200"]
       - xpack.monitoring.enabled:true
     volumes:
       - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
@@ -234,7 +234,7 @@ services:
     environment:
       - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
       - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts:http://nginx:9200
+      - xpack.monitoring.elasticsearch.hosts: ["http://nginx:9200"]
       - xpack.monitoring.enabled:true
     volumes:
       - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
@@ -271,7 +271,7 @@ services:
     environment:
       - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
       - "PIPELINE_WORKERS=4"
-      - xpack.monitoring.elasticsearch.hosts:http://nginx:9200
+      - xpack.monitoring.elasticsearch.hosts: ["http://nginx:9200"]
       - xpack.monitoring.enabled:true
     volumes:
       - ${PWD}/logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
@@ -294,9 +294,9 @@ services:
       ELASTICSEARCH_HOSTS: http://elasticsearch3:9203
       elasticsearch.url:   http://nginx:9200
       elasticsearch.hosts: http://nginx:9200
-      xpack.monitoring.enabled: "true"
-      xpack.reporting.enabled: "true"
-      xpack.monitoring.collection.enabled: "true" 
+      xpack.monitoring.enabled: true
+      xpack.reporting.enabled: true
+      xpack.monitoring.collection.enabled: true
     ports:
       - 5601:5601
     volumes:
