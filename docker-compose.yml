@@ -296,7 +296,7 @@ services:
       elasticsearch.hosts: http://nginx:9200
       xpack.monitoring.enabled: true
       xpack.reporting.enabled: true
-      xpack.monitoring.collection.enabled: true
+      xpack.monitoring.collection.enabled: "true"
     ports:
       - 5601:5601
     volumes:
