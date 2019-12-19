@@ -19,7 +19,7 @@ services:
       - http.cors.allow-origin=*
       - network.host=_eth0_
       - http.port=9201
-      - path.repo = "/backups"
+      - path.repo="/backups"
     ulimits:
       nofile:
         soft: 65536
