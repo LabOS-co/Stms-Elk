@@ -21,7 +21,7 @@ services:
       - network.host=_eth0_
       - http.port=9201
       - path.repo="/backups"
-      - xpack.monitoring.collection.enabled: true
+      - xpack.monitoring.collection.enabled=true
     ulimits:
       nofile:
         soft: 65536
@@ -76,7 +76,7 @@ services:
       - network.host=_eth0_
       - http.port=9202
       - path.repo="/backups"
-      - xpack.monitoring.collection.enabled: true
+      - xpack.monitoring.collection.enabled=true
     ulimits:
       nproc: 65535
       nofile:
