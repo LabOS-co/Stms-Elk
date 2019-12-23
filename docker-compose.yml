@@ -132,7 +132,7 @@ services:
       - network.host=_eth0_
       - http.port=9203
       - path.repo="/backups"
-      - xpack.monitoring.collection.enabled: true
+      - xpack.monitoring.collection.enabled=true
     ulimits:
       nproc: 65535
       nofile:
