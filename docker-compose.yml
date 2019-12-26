@@ -171,7 +171,8 @@ services:
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.5.0
     container_name: filebeat
-    command: filebeat -e --strict.perms=false --modules nginx,elasticsearch,logstash
+    command: filebeat -e --strict.perms=false 
+    #--modules nginx,elasticsearch,logstash
     volumes:
       - ${PWD}/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
       # This is needed for filebeat to load container log path as specified in filebeat.yml
