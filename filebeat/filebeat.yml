@@ -9,6 +9,24 @@
 
 # For more available modules and options, please see the filebeat.reference.yml sample
 # configuration file.
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      templates:
+        - condition.contains:
+              docker.container.image: elasticsearch
+          config:
+            - module: elasticsearch
+              log:
+                input:
+                  type: container
+                  paths:
+                    - /var/lib/docker/containers/${data.docker.container.id}/*.log
+        # fallback config when no condition match:
+        - config:
+            - type: container
+              paths:
+                - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
 
 
 #=========================== Filebeat inputs =============================
@@ -19,7 +37,7 @@ filebeat.inputs:
 # you can use different inputs for various configurations.
 # Below are the input specific configurations.
 
-- type: docker
+- type: container
 
   # Change to true to enable this input configuration.
   enabled: true
