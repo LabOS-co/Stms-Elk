@@ -176,7 +176,7 @@ services:
     volumes:
       - ${PWD}/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
       # This is needed for filebeat to load container log path as specified in filebeat.yml
-      #- "/var/lib/docker/containers/:/var/lib/docker/containers/:ro"
+      - "/var/lib/docker/containers/:/var/lib/docker/containers/:ro"
       # This is needed for filebeat to load logs for system and auth modules
       - "/var/log/:/var/log/:ro"
       - /var/run/docker.sock:/var/run/docker.sock
