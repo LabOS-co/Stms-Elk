@@ -32,17 +32,17 @@ filebeat.inputs:
 # Below are the input specific configurations.
 
 - type: container
-  containers.ids:
-    - "*"
-  containers.paths:
+  #containers.ids:
+  #  - "*"
+  paths:
     - '/var/lib/docker/containers/${data.docker.container.id}/*.log'
 
   # Change to true to enable this input configuration.
   enabled: true
   combine_partial: true
 
-  #json.message_key: log
-  #json.keys_under_root: true
+  json.message_key: log
+  json.keys_under_root: true
 
 setup.template.name: "filebeat-"
 setup.template.pattern: "filebeat-*"
