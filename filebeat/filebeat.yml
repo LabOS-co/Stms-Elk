@@ -16,12 +16,9 @@ filebeat.autodiscover:
         - condition.contains:
               docker.container.image: elasticsearch
           config:
-            - module: elasticsearch
-              log:
-                input:
-                  type: container
-                  paths:
-                    - /var/lib/docker/containers/${data.docker.container.id}/*.log
+            - type: docker
+              containers.ids:
+                - "${data.docker.container.id}"
 
 
 #=========================== Filebeat inputs =============================
