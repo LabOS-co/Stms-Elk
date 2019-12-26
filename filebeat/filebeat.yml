@@ -31,8 +31,8 @@ filebeat.inputs:
 
 - type: container
   containers.ids: '*'
-  #paths:
-  #  - '/var/lib/docker/containers/${data.docker.container.id}/*.log'
+  paths:
+    - '/var/lib/docker/containers/${data.docker.container.id}/*.log'
 
   # Change to true to enable this input configuration.
   #enabled: true
