@@ -22,11 +22,6 @@ filebeat.autodiscover:
                   type: container
                   paths:
                     - /var/lib/docker/containers/${data.docker.container.id}/*.log
-        # fallback config when no condition match:
-        - config:
-            - type: docker
-              paths:
-                - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
 
 
 #=========================== Filebeat inputs =============================
