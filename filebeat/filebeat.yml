@@ -19,12 +19,12 @@ filebeat.autodiscover:
             - module: elasticsearch
               log:
                 input:
-                  type: container
+                  type: docker
                   paths:
                     - /var/lib/docker/containers/${data.docker.container.id}/*.log
         # fallback config when no condition match:
         - config:
-            - type: container
+            - type: docker
               paths:
                 - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
 
