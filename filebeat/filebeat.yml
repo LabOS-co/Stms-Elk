@@ -38,7 +38,7 @@ filebeat.inputs:
     - '/var/lib/docker/containers/${data.docker.container.id}/*.log'
 
   # Change to true to enable this input configuration.
-  #enabled: true
+  enabled: true
   combine_partial: true
 
   #json.message_key: log
