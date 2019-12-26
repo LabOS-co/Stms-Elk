@@ -36,8 +36,6 @@ filebeat.inputs:
 
   # Change to true to enable this input configuration.
   enabled: true
-  containers.ids: 
-    - '*'
   combine_partial: true
   paths:
     - '/var/lib/docker/containers/${data.docker.container.id}/*.log'
