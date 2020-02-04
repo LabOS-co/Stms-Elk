@@ -92,5 +92,16 @@ curl -X PUT 'elasticsearch:9201/_template/logstash_clean_policy1?pretty' -H 'Con
   }
 }'
 
+# update watermark policy
+
+curl -X PUT  'elasticsearch:9201/_cluster/settings' -H 'Content-Type: application/json' -d'
+{ 
+"transient": {
+  "cluster.routing.allocation.disk.watermark.low": "1gb",
+  "cluster.routing.allocation.disk.watermark.high": "500mb",
+  "cluster.routing.allocation.disk.watermark.flood_stage": "200mb"
+}
+}'
+
 
 
