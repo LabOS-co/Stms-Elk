@@ -47,9 +47,10 @@ curl -X PUT "elasticsearch:9201/logstash*/_mapping?pretty" -H 'Content-Type: app
 {
   "properties": {
         "message": { "type": "text"  },
-		    "duration": { "type": "long"  },
-		    "service_duration": { "type": "long"  },
-        "seq": { "type": "long"  }
+		"duration": { "type": "long"  },
+		"service_duration": { "type": "long"  },
+        "seq": { "type": "long"  },
+		"query_duration": { "type": "long"  }
   }
 }'
 
