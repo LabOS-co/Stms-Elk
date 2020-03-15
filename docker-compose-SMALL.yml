@@ -81,6 +81,7 @@ services:
       - elastic
     ports:
      - 514:5014/udp
+     - 514:5014
   kibana:
     image: docker.elastic.co/kibana/kibana:7.4.0
     container_name: kibana
