@@ -12,48 +12,100 @@
 filebeat.autodiscover:
   providers:
     - type: docker
+      hints.enabled: true
       templates:
         - condition.contains:
-              docker.container.image: elasticsearch
+              docker.container.image: "elasticsearch"
           config:
-            - type: container
-              paths:
-                - /var/lib/docker/containers/${data.docker.container.id}/*.log
-              #containers.ids:
-               # - "${data.docker.container.id}"
+            - module: elasticsearch
+              enabled: true
+              audit:
+                input:
+                  type: container
+                  paths:
+                    - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
+              deprecation:
+                input:
+                  type: container
+                  paths:
+                    - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
+              gc:
+                input:
+                  type: container
+                  paths:
+                    - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
+              server:
+                input:
+                  type: container
+                  paths:
+                    - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
+              slowlog:
+                input:
+                  type: container
+                  paths:
+                    - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
+        - condition.contains:
+              docker.container.name: "nginx"
+          config:
+            - module: nginx
+              access:
+                input:
+                  type: docker
+                  containers:
+                    ids: "${data.docker.container.id}"
+                    stream: "stdout"
+              error:
+                input:
+                  type: docker
+                  containers:
+                    ids: "${data.docker.container.id}"
+                    stream: "stderr"
+        - condition.contains:
+              docker.container.image: kibana
+          config:
+            - module: kibana
+              log:
+                input:
+                  type: docker
+                  containers.ids:
+                    - "${data.docker.container.id}"
+        # fallback config when no condition match:
+        # - config:
+        #     - type: container
+        #       paths:
+        #         - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
 
 
 #=========================== Filebeat inputs =============================
 
-filebeat.inputs:
+# filebeat.inputs:
 
-# Each - is an input. Most options can be set at the input level, so
-# you can use different inputs for various configurations.
-# Below are the input specific configurations.
+# # Each - is an input. Most options can be set at the input level, so
+# # you can use different inputs for various configurations.
+# # Below are the input specific configurations.
 
-- type: container
-  #containers.ids:
-  #  - "*"
-  paths:
-    - '/var/lib/docker/containers/${data.docker.container.id}/*.log'
+# - type: docker
+#   containers.ids: "*"
+# #  paths:
+# #    - '/var/lib/docker/containers/${data.docker.container.id}/*.log'
+# #
+# #  # Change to true to enable this input configuration.
+# #  enabled: true
+# #  combine_partial: true
+# #
+# #  json.message_key: log
+# #  json.keys_under_root: true
 
-  # Change to true to enable this input configuration.
-  enabled: true
-  combine_partial: true
+# setup.template.name: "filebeat-"
+# setup.template.pattern: "filebeat-*"
+# #setup.dashboards.enabled: true
 
-  json.message_key: log
-  json.keys_under_root: true
-
-setup.template.name: "filebeat-"
-setup.template.pattern: "filebeat-*"
-#setup.dashboards.enabled: true
-
-#setup.kibana:
-#  host: http://kibana:5601
+setup.kibana:
+  host: http://kibana:5601
 
 output.elasticsearch:
-  hosts: ["http://nginx:9200"]
-  index: "filebeat-%{[beat.version]}-%{+yyyy.MM.dd}"
+  hosts: ["elasticsearch:9201","elasticsearch2:9202","elasticsearch3:9203"]  
+#   index: "filebeat-%{+yyyy.MM.dd}"
   
 #============================== X-Pack Monitoring ===============================
 # filebeat can export internal metrics to a central Elasticsearch monitoring
@@ -76,3 +128,4 @@ monitoring.enabled: true
 # that it is pointing to your Elasticsearch monitoring cluster, you can simply
 # uncomment the following line.
 monitoring.elasticsearch:
+  hosts: ["elasticsearch:9201","elasticsearch2:9202","elasticsearch3:9203"]
