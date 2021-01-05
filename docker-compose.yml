@@ -32,17 +32,6 @@ services:
         hard: -1
     cap_add:
       - ALL
-    # privileged: true
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 10s
     volumes:
       - type: volume
         source: logs
@@ -56,7 +45,7 @@ services:
       - 9201:9201
       - 9300:9300
   elasticsearch2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
     container_name: elasticsearch2
     healthcheck:
         test: ["CMD-SHELL", "curl --silent --fail localhost:9202/_cluster/health || exit 1"]
@@ -87,17 +76,6 @@ services:
         hard: -1
     cap_add:
       - ALL
-    # privileged: true
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 10s
     volumes:
       - type: volume
         source: logs
@@ -112,7 +90,7 @@ services:
     ports:
       - 9202:9202
   elasticsearch3:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
     container_name: elasticsearch3
     healthcheck:
         test: ["CMD-SHELL", "curl --silent --fail localhost:9203/_cluster/health || exit 1"]
@@ -143,17 +121,6 @@ services:
         hard: -1
     cap_add:
       - ALL
-    # privileged: true
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 10s
     volumes:
       - type: volume
         source: logs
@@ -190,17 +157,6 @@ services:
         hard: -1
     cap_add:
       - ALL
-    # privileged: true
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 10s
     restart: always
     environment:
       - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
@@ -227,17 +183,6 @@ services:
         hard: -1
     cap_add:
       - ALL
-    # privileged: true
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 10s
     restart: always
     environment:
       - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
@@ -265,16 +210,6 @@ services:
     cap_add:
       - ALL
     # privileged: true
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 10s
     restart: always
     environment:
       - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
@@ -318,23 +253,6 @@ services:
         hard: -1
     cap_add:
       - ALL
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      resources:
-        limits:
-          cpus: '1'
-          memory: 256M
-        reservations:
-          cpus: '1'
-          memory: 256M
-      restart_policy:
-        condition: on-failure
-        delay: 30s
-        max_attempts: 3
-        window: 120s
     depends_on:
       - elasticsearch
       - elasticsearch2
@@ -383,9 +301,13 @@ services:
            
 volumes:
   esdata1:
+    driver: local
   esdata2:
+    driver: local
   esdata3:
+    driver: local
   logs:
+    driver: local
 networks:
   elastic:
 
